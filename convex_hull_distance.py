@@ -8,12 +8,12 @@ def compute(target, convex_hull):
     l = convex_hull.shape[0]
 
     def obj(x):
-        result = np.dot(np.diag(x), target - convex_hull)
+        result = target - sum(np.dot(np.diag(x), convex_hull))
         return np.linalg.norm(result)
 
     # 不等式约束
     ineq_cons = {"type": "ineq",
-                 "fun": lambda x: -x}
+                 "fun": lambda x: x}
 
     # 等式约束
     eq_cons = {"type": "eq",
@@ -29,7 +29,7 @@ def compute(target, convex_hull):
 
 
 if __name__ == '__main__':
-    X, Y = np.random.random(size=(3, 4)), np.random.normal(size=4)
+    #X, Y = np.random.random(size=(3, 4)), np.random.normal(size=4)
+    Y = np.array([0, 0])
+    X = np.array([[0, 1], [1, 0], [1, 1]])
     print(compute(target=Y, convex_hull=X))
-
-
